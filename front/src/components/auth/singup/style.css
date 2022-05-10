@@ -1,0 +1,68 @@
+.container {
+    height: 502px;
+    width: 554px;
+    overflow: hidden;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+  }
+  
+  .container .sign-up-form {
+    width: 300px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 1px 1px 5px black;
+    text-align: center;
+    line-height: 50px;
+    margin-left: 2px;
+  }
+  
+  .container .sign-up-form {
+    height: 400px;
+  }
+  
+  .container .box {
+    border: none;
+    outline: none;
+    padding: wpx;
+    margin-top: 30px;
+    border-bottom: 2.4px solid black;
+  }
+  
+  .container .box:focus {
+    border-color: green;
+  }
+  
+  .container button {
+    height: 40px;
+    width: 200px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    margin-top: 80px;
+    border-radius: 30px;
+  }
+  
+  .container button:hover {
+    background: deeppink;
+    color: white;
+  }
+  
+  .container .sign-up-form button {
+    margin-top: 5px;
+  }
+  
+  .switch-buttons {
+    position: absolute;
+    top: 20%;
+  }
+  
+  .switch-buttons a {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+    margin: 10px;
+    font-size: 20px;
+    transition: .5s;
+  }

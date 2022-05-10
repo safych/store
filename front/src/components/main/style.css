@@ -1,0 +1,311 @@
+body {
+  font-family: 'Poppins' sans-serif;
+}
+
+a {
+  text-decoration: none;
+  font-size: 1.3rem;
+}
+
+.hero-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url(../images/index.jpeg);
+  opacity: 0.5;
+  background-size: cover;
+  background-position-x: 20%;
+  background-position-y: 20%;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  animation: introLoad 2s forwards;
+}
+
+nav {
+  position: fixed;
+  right: 0;
+  top: 0;
+  background: white;
+  height: 100vh;
+  width: 50%;
+  z-index: 999;
+  text-transform: uppercase;
+  transform: translateX(100%);
+  transition: transform .5s ease-in-out;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 8em;
+}
+
+nav a {
+  color: black;
+  padding: .75em 2em;
+  display: block;
+}
+
+nav a &:hover {
+  background: rgb(235, 235, 235);
+}
+
+nav .close {
+  width: 5%;
+  margin-top: 2%;
+  margin-right: 4%;
+  float: right;
+}
+
+.more-info {
+  margin-top: 40%;
+}
+
+.more-info img {
+  width: 100%;
+  object-fit: cover;
+  margin-left: 10%;
+}
+
+.more-info .title {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.more-info .desc {
+  line-height: 1.5rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+header svg {
+  width: 3em;
+  margin-top: 2em;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-top: 2em;
+  line-height: 3.3rem;
+}
+
+.subhead {
+  font-size: 1.4rem;
+}
+
+section.hero {
+  color: white;
+  height: 90vh;
+  animation: moveDown 1s ease-in-out forwards;
+  opacity: 0;
+}
+
+.hero-img {
+  left: unset;
+  right: 0;
+  width: 50%;
+  height: 42em;
+}
+
+.arrows {
+	width: 60px;
+	height: 72px;
+	position: absolute;
+	left: 50%;
+	margin-left: -30px;
+	bottom: 20px;
+}
+
+.arrows path {
+	stroke: #2994D1;
+	fill: transparent;
+	stroke-width: 1px;
+	animation: arrow 2s infinite;
+	-webkit-animation: arrow 2s infinite;
+}
+
+@keyframes arrow
+{
+0% {opacity:0}
+40% {opacity:1}
+80% {opacity:0}
+100% {opacity:0}
+}
+
+@-webkit-keyframes arrow
+{
+0% {opacity:0}
+40% {opacity:1}
+80% {opacity:0}
+100% {opacity:0}
+}
+
+.arrows path.a1 {
+	animation-delay:-1s;
+	-webkit-animation-delay:-1s;
+}
+
+.arrows path.a2 {
+	animation-delay:-0.5s;
+	-webkit-animation-delay:-0.5s;
+}
+
+.arrows path.a3 {
+	animation-delay:0s;
+	-webkit-animation-delay:0s;
+}
+
+
+.open-nav {
+  transform: translateX(0%);
+}
+
+@media only screen and (max-width: 678px) {
+  section.hero h1 {
+    color: black;
+    font-size: 35px;
+  }
+
+  section.hero p {
+    color: black;
+    font-size: 25px;
+  }
+
+}
+
+
+@media only screen and (min-width: 920px) {
+  .menu {
+    display: none;
+  }
+
+  nav {
+    transform: translateX(0);
+    position: unset;
+    display: block;
+    width: auto;
+    height: auto;
+    background: none;
+  }
+
+  nav svg.close {
+    display: none;
+  }
+
+  nav ul {
+    display: flex;
+    margin: 0;
+  }
+
+  nav ul a {
+    color: white;
+    padding: .5em 1.5em;
+    font-size: .9rem;
+  }
+
+  nav ul a &:hover {
+    background: none;
+    text-decoration: underline;
+  }
+
+  .hero-img {
+    left: unset;
+    right: 0;
+    width: 50%;
+    height: 42em;
+  }
+
+  .logo {
+    color: black
+
+    span {
+      color: red;
+    }
+  }
+
+  section.hero {
+    color: black;
+    height: auto;
+    width: 40%;
+    margin-bottom: 8em;
+  }
+
+  .feature {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 3em;
+    margin-bottom: 8em;
+  }
+
+  .feature img {
+    width: 25em;
+  }
+
+  .feature .content {
+    text-align: right;
+    width: 25em;
+  }
+
+  .feature.left {
+    grid-template-areas: "left right";
+  }
+
+  .feature.left img {
+    grid-area: left;
+  }
+
+  .feature.left .content {
+    text-align: left;
+    width: 25em;
+    justify-self: left;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .wrapper {
+    width: 1200px;
+    margin: 0 auto;
+  }
+
+  .feature {
+    gap: 0;
+  }
+
+  .arrows {
+    top: 350px;
+  }
+}
+
+
+@keyframes introLoad {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@keyframes moveArrow {
+  from {
+    transform: translateY(-30px)
+  }
+  to {
+    transform: translateY(0)
+  }
+}
+
+@keyframes moveDown {
+  from {
+    transform: translateY(-100px)
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
