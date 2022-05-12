@@ -24,6 +24,28 @@ class SingIn extends Component {
   }
 
   login = () => {
+    fetch(Url + 'admins', {
+      method: 'GET',
+    })
+        .then(response => response.json())
+        .then(data => {
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].email === this.state.email && data[i].password === this.state.password) {
+            localStorage.setItem("id", JSON.stringify(data[i].id));
+            localStorage.setItem("email", JSON.stringify(data[i].email));
+            localStorage.setItem("password", JSON.stringify(data[i].password));      
+            localStorage.setItem("name", JSON.stringify(data[i].name)); 
+            this.setState({error: ""});
+            this.props.restart();
+            break;
+          } else {
+            this.loginUser();
+          }
+        }
+    })
+  }
+
+  loginUser = () => {
     fetch(Url + 'users', {
       method: 'GET',
     })
@@ -57,7 +79,7 @@ class SingIn extends Component {
             {/* <form onSubmit={this.handleSubmit}> */}
               <p><input placeholder="email" value={this.state.email} onChange={this.setEmail} /></p>
               <input placeholder="password" value={this.state.password} onChange={this.setPassword} />
-              <p style={{ color: 'red' }}>{this.state.error}</p>
+              <p style={{ color: 'red', fontSize: '12px' }}>{this.state.error}</p>
               <button type="submit" onClick={this.login}>Login</button>
             {/* </form> */} 
           </div>

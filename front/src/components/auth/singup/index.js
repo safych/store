@@ -41,7 +41,7 @@ class SingUp extends Component {
     this.setState({password: event.target.value});
   }
 
-  registration = () => {
+  check = () => {
     const beginWithoutDigit = /^\D.*$/;
     const withoutSpecialChars = /^[^-() /]*$/;
     const containsLetters = /^.*[a-zA-Z]+.*$/;
@@ -51,27 +51,36 @@ class SingUp extends Component {
     })
         .then(response => response.json())
         .then(data => {
-           for (var i = 0; i < data.length; i++) {
-             if (this.state.name !== "" && this.state.surname !== "" && this.state.email !== "" && 
-                this.state.password !== "" && this.state.numberPhone !== "") {
-                  if(validator.isEmail(this.state.email) && validator.isMobilePhone(this.state.numberPhone, 'uk-UA') &&
-                  beginWithoutDigit.test(this.state.password) && withoutSpecialChars.test(this.state.password) && 
-                  containsLetters.test(this.state.password) && this.state.password.length >= 8) {
-                      if (data[i].email === this.state.email || data[i].number_phone === this.state.numberPhone) {
-                        this.state.flag.push('new value');
-                        this.setState({ error: "Коричтувач з таким email чи номером телефона уже існує" });
-                      }
-                  } else {
-                    this.setState({ error: "Некоректно введено пароль, email чи номер телефону" });
-                  }
-             } else {
-              this.setState({ error: "Запоніть всі поля!!" });
-             }
+           for (var i = 0; i < data.length; i++) {  
+              if (data[i].email === this.state.email || data[i].number_phone === this.state.numberPhone) {
+                this.state.flag.push('new value');
+                this.setState({ error: "Коричтувач з таким email чи номером телефона уже існує" });
+              }
            }
         })
     
     if (!this.state.flag.length) {
-      fetch(Url + 'users', {
+      if (this.state.name !== "" && this.state.surname !== "" && this.state.email !== "" &&
+      this.state.password !== "" && this.state.numberPhone !== "") {
+        if(validator.isEmail(this.state.email) && validator.isMobilePhone(this.state.numberPhone, 'uk-UA') &&
+              beginWithoutDigit.test(this.state.password) && withoutSpecialChars.test(this.state.password) && 
+              containsLetters.test(this.state.password) && this.state.password.length >= 8) {
+                if(this.state.email !== "admin@ukr.net") {
+                  this.registration();
+                } else {
+                  this.setState({ error: "Коричтувач з таким email чи номером телефона уже існує" });
+                }
+        } else {
+          this.setState({ error: "Некоректно введено пароль, email чи номер телефону" });
+        }
+      } else {
+        this.setState({ error: "Запоніть всі поля!!" });
+      }
+    }
+  }
+
+  registration = () => {
+    fetch(Url + 'users', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -86,7 +95,6 @@ class SingUp extends Component {
         })
       });
       this.setState({ redir: true });
-    }
   }
 
   render() {
@@ -101,8 +109,8 @@ class SingUp extends Component {
               <input placeholder="number phone" value={this.state.numberPhone} onChange={this.setNumberPhone} />
               <input placeholder="email" value={this.state.email} onChange={this.setEmail} />
               <input placeholder="password" value={this.state.password} onChange={this.setPassword} />
-              <p style={{ color: 'red' }}>{this.state.error}</p>
-              <button type="submit" onClick={this.registration}>Register</button>
+              <p style={{ color: 'red', fontSize: '10px' }}>{this.state.error}</p>
+              <button type="submit" onClick={this.check}>Register</button>
           </div>
         </div>
       </div>
