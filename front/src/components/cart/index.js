@@ -1,15 +1,15 @@
 import { Component } from "react";
 // import './style.css';
 
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 
-import Url from "../../mixins/apiUrl";
+// import Url from "../../mixins/apiUrl";
 
 class Cart extends Component {
-    constructor() {
-        super();
+    // constructor() {
+    //     super();
 
-    }
+    // }
 
     render() {
         return (

@@ -54,7 +54,7 @@ class Products extends Component {
                       <h3>Size: </h3>
                         <p>{product.size}</p>
                     </div>
-                    <button className="buy" onClick={this.buy(product)}>{product.price}</button>
+                    <button className="buy" onClick={() => this.buy(product)}>{product.price}</button>
                   </div>
                 </div>
               </div>

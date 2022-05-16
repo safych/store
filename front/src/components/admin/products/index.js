@@ -1,6 +1,16 @@
 import { Component } from "react";
 
 import Url from "../../../mixins/apiUrl";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 class Products extends Component {
     constructor() {
@@ -124,47 +134,57 @@ class Products extends Component {
     render() {
         return(
             <div>
-                <h1>Products</h1>
-                <table border="1" className="content-table">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Size</th>
-                            <th>Items left</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {   
-                        this.state.products.map(product => 
-                        <tr>
-                            <td>{product.id}</td><td>{product.name}</td>
-                            <td>{product.description}</td><td>{product.size}</td>
-                            <td>{product.items_left}</td><td>{product.price}</td>
-                        </tr>
-                    )}
-                    </tbody>
-                </table>
-                <h2>Add product</h2>
-                <p><input placeholder="name" value={this.state.addName} onChange={this.setAddName} /></p>
-                <p><input placeholder="description" value={this.state.addDescription} onChange={this.setAddDescription} /></p>
-                <p><input placeholder="size" value={this.state.addSize} onChange={this.setAddSize} /></p>
-                <p><input placeholder="items left" type="number" value={this.state.addItemsLeft} onChange={this.setAddItemsLeft} /></p>
-                <p><input placeholder="price" type="number" value={this.state.addPrice} onChange={this.setAddPrice} /></p>
-                <button type="submit" onClick={this.addProduct}>Create</button>
-                <h2>Delete product</h2>
-                <p><input placeholder="id" value={this.state.deleteId} onChange={this.setDeleteId} /></p>
-                <button type="submit" onClick={this.deleteProduct}>Delete</button>
-                <h2>Edit product</h2>
-                <p><input placeholder="id" value={this.state.editId} onChange={this.setEditId} /></p>
-                <p><input placeholder="name" value={this.state.editName} onChange={this.setEditName} /></p>
-                <p><input placeholder="description" value={this.state.editDescription} onChange={this.setEditDescription} /></p>
-                <p><input placeholder="size" value={this.state.editSize} onChange={this.setEditSize} /></p>
-                <p><input placeholder="items left" type="number" value={this.state.editItemsLeft} onChange={this.setEditItemsLeft} /></p>
-                <p><input placeholder="price" type="number" value={this.state.editPrice} onChange={this.setEditPrice} /></p>
-                <button type="submit" onClick={this.editProduct}>Update</button>
+                <h2>Products</h2>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                        <TableRow>
+                            <TableCell style={{ "font-weight": "bold" }}>Id</TableCell>
+                            <TableCell align="center" style={{ "font-weight": "bold" }}>Name</TableCell>
+                            <TableCell align="center" style={{ "font-weight": "bold" }}>Description</TableCell>
+                            <TableCell align="center" style={{ "font-weight": "bold" }}>Size</TableCell>
+                            <TableCell align="center" style={{ "font-weight": "bold" }}>Items left</TableCell>
+                            <TableCell align="center" style={{ "font-weight": "bold" }}>Price</TableCell>
+                        </TableRow>
+                        </TableHead>
+                        <TableBody>
+                        {   
+                            this.state.products.map(product => 
+                                <TableRow
+                                key={product.id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    <TableCell component="th" scope="row">
+                                        {product.id}
+                                    </TableCell>
+                                    <TableCell align="center">{product.name}</TableCell>
+                                    <TableCell align="center">{product.description}</TableCell>
+                                    <TableCell align="center">{product.size}</TableCell>
+                                    <TableCell align="center">{product.items_left}</TableCell>
+                                    <TableCell align="center">{product.price}</TableCell>
+                                </TableRow>
+                        )}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <h3>Add product</h3>
+                <p><TextField placeholder="name" value={this.state.addName} onChange={this.setAddName} /></p>
+                <p><TextField placeholder="description" value={this.state.addDescription} onChange={this.setAddDescription} /></p>
+                <p><TextField placeholder="size" value={this.state.addSize} onChange={this.setAddSize} /></p>
+                <p><TextField placeholder="items left" type="number" value={this.state.addItemsLeft} onChange={this.setAddItemsLeft} /></p>
+                <p><TextField placeholder="price" type="number" value={this.state.addPrice} onChange={this.setAddPrice} /></p>
+                <Button variant="contained" onClick={this.addProduct}>Create</Button>
+                <h3>Delete product</h3>
+                <p><TextField placeholder="id" type="number" value={this.state.deleteId} onChange={this.setDeleteId} /></p>
+                <Button variant="contained" onClick={this.deleteProduct}>Delete</Button>
+                <h3>Edit product</h3>
+                <p><TextField placeholder="id" type="number" value={this.state.editId} onChange={this.setEditId} /></p>
+                <p><TextField placeholder="name" value={this.state.editName} onChange={this.setEditName} /></p>
+                <p><TextField placeholder="description" value={this.state.editDescription} onChange={this.setEditDescription} /></p>
+                <p><TextField placeholder="size" value={this.state.editSize} onChange={this.setEditSize} /></p>
+                <p><TextField placeholder="items left" type="number" value={this.state.editItemsLeft} onChange={this.setEditItemsLeft} /></p>
+                <p><TextField placeholder="price" type="number" value={this.state.editPrice} onChange={this.setEditPrice} /></p>
+                <Button variant="contained" onClick={this.editProduct}>Update</Button>
             </div>
         );
     }

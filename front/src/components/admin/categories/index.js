@@ -1,6 +1,16 @@
 import { Component } from "react";
 
 import Url from "../../../mixins/apiUrl";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 class Categories extends Component {
     constructor() {
@@ -117,63 +127,80 @@ class Categories extends Component {
     render() {
         return(
             <div>
-                <h1>Categories</h1>
-                <table border="1" className="content-table">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {   
-                        this.state.categories.map(category => 
-                        <tr>
-                            <td>{category.id}</td><td>{category.name}</td>
-                        </tr>
-                    )}
-                    </tbody>
-                </table>
-                <h2>Add category</h2>
-                <p><input placeholder="category" value={this.state.addName} onChange={this.setAddName} /></p>
-                <button type="submit" onClick={this.addCategory}>Add</button>
-                <h2>Delete category</h2>
-                <p><input placeholder="id" value={this.state.deleteIdCategory} onChange={this.setDeleteIdCategory} /></p>
-                <button type="submit" onClick={this.deleteCategory}>Delete</button>
-                <h2>Edit category</h2>
-                <p><input placeholder="id" value={this.state.editIdCategory} onChange={this.setEditIdCategory} /></p>
-                <p><input placeholder="name" value={this.state.editName} onChange={this.setEditName} /></p>
-                <p><button type="submit" onClick={this.editCategory}>Update</button></p>
-                <table border="1" className="content-table">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Product id</th>
-                            <th>Category id</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {   
-                        this.state.categories_products.map(category_product => 
-                        <tr>
-                            <td>{category_product.id}</td><td>{category_product.product_id}</td>
-                            <td>{category_product.category_id}</td>
-                        </tr>
-                    )}
-                    </tbody>
-                </table>
-                <h2>Add category to product</h2>
-                <p><input placeholder="product id" value={this.state.addProductId} onChange={this.setAddProductId} /></p>
-                <p><input placeholder="category id" value={this.state.addCategoryId} onChange={this.setAddCategoryId} /></p>
-                <button type="submit" onClick={this.addCategoryProduct}>Add</button>
-                <h2>Delete category for product</h2>
-                <p><input placeholder="id" value={this.state.deleteIdCategoryProduct} onChange={this.setDeleteIdCategoryProduct} /></p>
-                <button type="submit" onClick={this.deleteCategoryProduct}>Delete</button>
-                <h2>Edit category for product</h2>
-                <p><input placeholder="id" value={this.state.editIdCategoryProduct} onChange={this.setEditIdCategoryProduct} /></p>
-                <p><input placeholder="product id" value={this.state.editProductId} onChange={this.setEditProductId} /></p>
-                <p><input placeholder="category id" value={this.state.editCategoryId} onChange={this.setEditCategoryId} /></p>
-                <button type="submit" onClick={this.editCategoryProduct}>Update</button>
+                <h2>Categories</h2>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                        <TableRow>
+                            <TableCell style={{ "font-weight": "bold" }}>Id</TableCell>
+                            <TableCell align="center" style={{ "font-weight": "bold" }}>Name</TableCell>
+                        </TableRow>
+                        </TableHead>
+                        <TableBody>
+                        {   
+                            this.state.categories.map(category => 
+                                <TableRow
+                                key={category.id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    <TableCell component="th" scope="row">
+                                        {category.id}
+                                    </TableCell>
+                                    <TableCell align="center">{category.name}</TableCell>
+                                </TableRow>
+                        )}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <h3>Add category</h3>
+                <p><TextField placeholder="category" value={this.state.addName} onChange={this.setAddName} /></p>
+                <Button variant="contained" onClick={this.addCategory}>Add</Button>
+                <h3>Delete category</h3>
+                <p><TextField placeholder="id" type="number" value={this.state.deleteIdCategory} onChange={this.setDeleteIdCategory} /></p>
+                <Button variant="contained" onClick={this.deleteCategory}>Delete</Button>
+                <h3>Edit category</h3>
+                <p><TextField placeholder="id" type="number" value={this.state.editIdCategory} onChange={this.setEditIdCategory} /></p>
+                <p><TextField placeholder="name" value={this.state.editName} onChange={this.setEditName} /></p>
+                <Button variant="contained" onClick={this.editCategory}>Update</Button>
+                <h2>Categories for product</h2>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                        <TableRow>
+                            <TableCell style={{ "font-weight": "bold" }}>Id</TableCell>
+                            <TableCell align="center" style={{ "font-weight": "bold" }}>Product id</TableCell>
+                            <TableCell align="center" style={{ "font-weight": "bold" }}>Category id</TableCell>
+                        </TableRow>
+                        </TableHead>
+                        <TableBody>
+                        {   
+                            this.state.categories_products.map(category_product => 
+                                <TableRow
+                                key={category_product.id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    <TableCell component="th" scope="row">
+                                        {category_product.id}
+                                    </TableCell>
+                                    <TableCell align="center">{category_product.product_id}</TableCell>
+                                    <TableCell align="center">{category_product.category_id}</TableCell>
+                                </TableRow>
+                        )}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <h3>Add category to product</h3>
+                <p><TextField placeholder="product id" value={this.state.addProductId} onChange={this.setAddProductId} /></p>
+                <p><TextField placeholder="category id" value={this.state.addCategoryId} onChange={this.setAddCategoryId} /></p>
+                <Button variant="contained" onClick={this.addCategoryProduct}>Add</Button>
+                <h3>Delete category for product</h3>
+                <p><TextField placeholder="id" type="number" value={this.state.deleteIdCategoryProduct} onChange={this.setDeleteIdCategoryProduct} /></p>
+                <Button variant="contained" onClick={this.deleteCategoryProduct}>Delete</Button>
+                <h3>Edit category for product</h3>
+                <p><TextField placeholder="id" type="number" value={this.state.editIdCategoryProduct} onChange={this.setEditIdCategoryProduct} /></p>
+                <p><TextField placeholder="product id" value={this.state.editProductId} onChange={this.setEditProductId} /></p>
+                <p><TextField placeholder="category id" value={this.state.editCategoryId} onChange={this.setEditCategoryId} /></p>
+                <Button variant="contained" onClick={this.editCategoryProduct}>Update</Button>
             </div>
         );
     }
