@@ -13,52 +13,60 @@
 ActiveRecord::Schema.define(version: 2022_05_10_161626) do
 
   create_table "admins", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password"
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "password", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "cart_items", force: :cascade do |t|
-    t.string "user_id"
-    t.string "product_id"
-    t.string "items_count"
+    t.integer "user_id"
+    t.integer "product_id"
+    t.string "items_count", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_cart_items_on_product_id"
+    t.index ["user_id"], name: "index_cart_items_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "categories_products", force: :cascade do |t|
-    t.string "product_id"
-    t.string "category_id"
+    t.integer "product_id"
+    t.integer "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_categories_products_on_category_id"
+    t.index ["product_id"], name: "index_categories_products_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.text "description"
-    t.string "size"
-    t.integer "items_left"
-    t.integer "price"
+    t.string "size", null: false
+    t.integer "items_left", null: false
+    t.integer "price", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "surname"
-    t.string "email"
-    t.string "password"
-    t.string "number_phone"
+    t.string "name", null: false
+    t.string "surname", null: false
+    t.string "email", null: false
+    t.string "password", null: false
+    t.string "number_phone", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "cart_items", "products", on_delete: :cascade
+  add_foreign_key "cart_items", "users", on_delete: :cascade
+  add_foreign_key "categories_products", "categories", on_delete: :cascade
+  add_foreign_key "categories_products", "products", on_delete: :cascade
 end
