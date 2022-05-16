@@ -101,8 +101,8 @@ class SingUp extends Component {
     return (
       <div>
         { this.state.redir === true ? <Redirect to="/singin" /> : null }
-        <div class="container">
-          <div class="sign-up-form">
+        <div className="container">
+          <div className="sign-up-form">
             <h2>Sing up</h2>
               <input placeholder="name" value={this.state.name} onChange={this.setName} />
               <input placeholder="surname" value={this.state.surname} onChange={this.setSurname} />
@@ -110,7 +110,7 @@ class SingUp extends Component {
               <input placeholder="email" value={this.state.email} onChange={this.setEmail} />
               <input placeholder="password" value={this.state.password} onChange={this.setPassword} />
               <p style={{ color: 'red', fontSize: '10px' }}>{this.state.error}</p>
-              <button type="submit" onClick={this.check}>Register</button>
+              <button className="singUpBtn" onClick={this.check}>Register</button>
           </div>
         </div>
       </div>

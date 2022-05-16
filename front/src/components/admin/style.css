@@ -1,0 +1,14 @@
+.header .mnu_top li {
+    display: inline-block;
+    margin-right: 22%;
+}
+
+.header .mnu_top li a{
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+
+.header .mnu_top li a:hover {
+    color: #3a374c;
+}

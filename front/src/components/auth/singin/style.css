@@ -5,7 +5,7 @@
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 10%;
+  margin-top: auto;
 }
 
 .container .sign-in-form {
@@ -34,7 +34,7 @@
   border-color: green;
 }
 
-.container button {
+.container .singInBtn {
   height: 40px;
   width: 200px;
   outline: none;
@@ -44,12 +44,12 @@
   border-radius: 30px;
 }
 
-.container button:hover {
+.container .singInBtn:hover {
   background: deeppink;
   color: white;
 }
 
-.container .sign-in-form button {
+.container .sign-in-form .singInBtn {
   margin-top: 5px;
 }
 
