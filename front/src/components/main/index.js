@@ -8,7 +8,7 @@ import {
 
 import './style.css';
 
-import Product from "../product";
+import Products from "../products";
 import SingIn from "../auth/singin";
 import SingUp from "../auth/singup";
 import Content from "./content";
@@ -53,7 +53,6 @@ class Main extends Component {
 
   restart = () => {
     this.forceUpdate();
-    // this.setState({ email: localStorage.getItem("email") });
   }
 
   render() {
@@ -119,7 +118,7 @@ class Main extends Component {
             </header>
             { localStorage.getItem("enable") === "true" ? <Content/> : null}
             <Switch>
-              <Route path="/products" component={Product} />
+              <Route path="/products" component={Products} />
               <Route path="/cart" component={Cart} />
               <Route path="/singin" render={() => <SingIn restart={this.restart}/> } />
               <Route path="/singup" component={SingUp} />

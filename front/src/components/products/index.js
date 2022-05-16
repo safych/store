@@ -5,7 +5,7 @@ import blouses from '../images/blouses.jpeg';
 
 import Url from "../../mixins/apiUrl";
 
-class Product extends Component {
+class Products extends Component {
     constructor() {
         super();
         this.state = {
@@ -29,9 +29,9 @@ class Product extends Component {
       })
     }
 
-    componentDidUpdate() {
-      // console.log("update");
-    }
+    // componentDidUpdate() {
+    //   console.log("update");
+    // }
 
 
     buy = (product) => {
@@ -41,7 +41,6 @@ class Product extends Component {
     render() {
       return(
         <div>
-        <h1>Products</h1>
           {
             this.state.products.map((product, i) => 
               <div className="container">
@@ -66,4 +65,4 @@ class Product extends Component {
     }
 }
 
-export default Product;
+export default Products;
