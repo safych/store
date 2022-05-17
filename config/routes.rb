@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :sessions, only: [:create]
+  resources :registrations, only: [:create]
   resources :cart_items
   resources :products
   resources :categories_products
