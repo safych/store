@@ -38,6 +38,7 @@ class SingIn extends Component {
             this.props.restart();
             break;
           } else {
+            this.setState({error: "Невірно введені данні"});
             this.loginUser();
           }
         }

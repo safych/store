@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class CategoriesProductsController < ApplicationController
-  before_action :set_categories_product, only: [:show, :update, :destroy]
+  before_action :set_categories_product, only: %i[show update destroy]
 
   # GET /categories_products
   def index
@@ -39,13 +41,14 @@ class CategoriesProductsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_categories_product
-      @categories_product = CategoriesProduct.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def categories_product_params
-      params.require(:categories_product).permit(:product_id, :category_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_categories_product
+    @categories_product = CategoriesProduct.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def categories_product_params
+    params.require(:categories_product).permit(:product_id, :category_id)
+  end
 end

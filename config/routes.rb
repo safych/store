@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  resources :sessions, only: [:create]
-  resources :registrations, only: [:create]
+  post '/login', to: 'tokens#create'
+  delete '/logout', to: 'tokens#destroy'
+  post '/login', to: 'profiles#info'
   resources :cart_items
   resources :products
   resources :categories_products
