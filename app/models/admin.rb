@@ -1,6 +1,8 @@
-class Admin < ApplicationRecord
-    # has_secure_password
+# frozen_string_literal: true
 
-    # validates_presence_of :email
-    # validates_uniqueness_of :email
+class Admin < ApplicationRecord
+  # has_secure_password
+
+  # validates_presence_of :email
+  # validates_uniqueness_of :email
 end
