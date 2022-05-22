@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   post '/login', to: 'tokens#create'
   delete '/logout', to: 'tokens#destroy'
-  post '/login', to: 'profiles#info'
+  get '/login', to: 'profiles#info'
   resources :cart_items
   resources :products
   resources :categories_products

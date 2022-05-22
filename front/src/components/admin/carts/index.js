@@ -140,7 +140,7 @@ class Carts extends Component {
                     </Table>
                 </TableContainer>
                 <h3>Add cart</h3>
-                <p><TextField placeholder="user id" value={this.state.addUserId} onChange={this.setAddUserId} /></p>
+                <p><TextField id="outlined-basic" label="user id" variant="outlined" value={this.state.addUserId} onChange={this.setAddUserId} /></p>
                 <p><TextField placeholder="product id" value={this.state.addProductId} onChange={this.setAddProductId} /></p>
                 <p><TextField placeholder="items count" value={this.state.addItemsCount} onChange={this.setAddItemsCount} /></p>
                 <Button variant="contained" onClick={this.addCart}>Add</Button>

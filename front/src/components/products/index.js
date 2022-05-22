@@ -6,8 +6,8 @@ import blouses from '../images/blouses.jpeg';
 import Url from "../../mixins/apiUrl";
 
 class Products extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
           products: []
         }
@@ -35,12 +35,13 @@ class Products extends Component {
 
 
     buy = (product) => {
-      console.log(product.id);
+      
     }
 
     render() {
       return(
         <div>
+          <h1>Products</h1>
           {
             this.state.products.map((product, i) => 
               <div className="container">

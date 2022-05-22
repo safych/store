@@ -24,25 +24,39 @@ class SingIn extends Component {
   }
 
   login = () => {
-    fetch(Url + 'admins', {
-      method: 'GET',
+    fetch(Url + 'login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+          email: this.state.email, 
+          password_digest: this.state.password
+      })
     })
-        .then(response => response.json())
-        .then(data => {
-        for (var i = 0; i < data.length; i++) {
-          if (data[i].email === this.state.email && data[i].password === this.state.password) {
-            localStorage.setItem("id", JSON.stringify(data[i].id));
-            localStorage.setItem("email", JSON.stringify(data[i].email));    
-            localStorage.setItem("name", JSON.stringify(data[i].name)); 
-            this.setState({error: ""});
-            this.props.restart();
-            break;
-          } else {
-            this.setState({error: "Невірно введені данні"});
-            this.loginUser();
-          }
-        }
-    })
+    .then(response => response.json())
+    .then(data => localStorage.setItem("token", JSON.stringify(data.access_token)));
+    
+    // fetch(Url + 'admins', {
+    //   method: 'GET',
+    // })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //     for (var i = 0; i < data.length; i++) {
+    //       if (data[i].email === this.state.email && data[i].password === this.state.password) {
+    //         localStorage.setItem("id", JSON.stringify(data[i].id));
+    //         localStorage.setItem("email", JSON.stringify(data[i].email));    
+    //         localStorage.setItem("name", JSON.stringify(data[i].name)); 
+    //         this.setState({error: ""});
+    //         this.props.restart();
+    //         break;
+    //       } else {
+    //         this.setState({error: "Невірно введені данні"});
+    //         this.loginUser();
+    //       }
+    //     }
+    // })
   }
 
   loginUser = () => {
@@ -69,7 +83,7 @@ class SingIn extends Component {
   render() {
     return (
       <div>
-        { localStorage.getItem("email") ? <Redirect to="/products" /> : null }
+        { localStorage.getItem("token") ? <Redirect to="/products" /> : null }
         <div className="container">
           <div className="sign-in-form">
             <h2>Sing in</h2>

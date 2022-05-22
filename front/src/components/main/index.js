@@ -14,6 +14,9 @@ import SingUp from "../auth/singup";
 import Content from "./content";
 import Cart from "../cart";
 import Admin from "../admin";
+import Settings from "../settings";
+
+import Url from "../../mixins/apiUrl";
 
 class Main extends Component {
   constructor() {
@@ -24,15 +27,14 @@ class Main extends Component {
 
     localStorage.setItem("enable", JSON.stringify(true));
 
+    if (localStorage.getItem("token")) {
+      fetch(Url + 'info', {
+        method: 'GET',
+        headers: { "Access-Token": localStorage.getItem("token").replace(/^"(.*)"$/, '$1') }
+      })
+      .then(data => { this.setState({email: data.email }) })
+    }
   }
-
-  // componentDidMount() {
-    
-  // }
-  //
-  // componentDidUpdate() {
-  //   console.log("update");
-  // }
 
   enableImg = () => {
     localStorage.setItem("enable", JSON.stringify(true));
@@ -44,11 +46,13 @@ class Main extends Component {
   }
 
   leave = () => {
-    localStorage.removeItem("id");
     localStorage.removeItem("email");
+    fetch(Url + "logout", { 
+      method: 'delete', 
+      headers: { "Access-Token": localStorage.getItem("token").replace(/^"(.*)"$/, '$1') }
+    }).then(response => response.json());
     this.forceUpdate();
     localStorage.setItem("enable", JSON.stringify(true));
-    this.setState({ email: "" });
   }
 
   restart = () => {
@@ -87,6 +91,9 @@ class Main extends Component {
                         <li>
                           <Link style={{ color: 'black' }} to="/singup" onClick={this.notEnableImg}>Register</Link>
                         </li>
+                        <li>
+                          <Link style={{ color: 'black' }} to="/" onClick={this.leave}>Leave</Link>
+                        </li>
                       </ul>
                       : this.state.email.includes("admin@ukr.net") || localStorage.getItem("email").includes("admin@ukr.net") ?
                       <ul>
@@ -109,6 +116,9 @@ class Main extends Component {
                           <Link style={{ color: 'black' }} to="/cart" onClick={this.notEnableImg}>Cart</Link>
                         </li>
                         <li>
+                          <Link style={{ color: 'black' }} to="/settings" onClick={this.notEnableImg}>Settings</Link>
+                        </li>
+                        <li>
                           <Link style={{ color: 'black' }} to="/" onClick={this.leave}>Leave</Link>
                         </li>
                       </ul>
@@ -118,11 +128,12 @@ class Main extends Component {
             </header>
             { localStorage.getItem("enable") === "true" ? <Content/> : null}
             <Switch>
-              <Route path="/products" component={Products} />
+              <Route path="/products" component={<Products email={this.state.email}/>} />
               <Route path="/cart" component={Cart} />
               <Route path="/singin" render={() => <SingIn restart={this.restart}/> } />
               <Route path="/singup" component={SingUp} />
               <Route path="/admin" component={Admin} />
+              <Route path="/settings" component={Settings} />
             </Switch>
           </div>
         </div>
