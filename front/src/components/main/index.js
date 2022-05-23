@@ -21,10 +21,12 @@ import Url from "../../mixins/apiUrl";
 class Main extends Component {
   constructor() {
     super();
-    this.state = {
-      email: ""
-    };
+    this.state= {
+      user: ""
+    }
+  }
 
+  componentDidMount() {
     localStorage.setItem("enable", JSON.stringify(true));
 
     if (localStorage.getItem("token")) {
@@ -32,7 +34,8 @@ class Main extends Component {
         method: 'GET',
         headers: { "Access-Token": localStorage.getItem("token").replace(/^"(.*)"$/, '$1') }
       })
-      .then(data => { this.setState({email: data.email }) })
+      .then(response => response.json())
+      .then(data => { this.setState({ user: data }) })
     }
   }
 
@@ -46,13 +49,13 @@ class Main extends Component {
   }
 
   leave = () => {
-    localStorage.removeItem("email");
+    localStorage.removeItem("token");
     fetch(Url + "logout", { 
       method: 'delete', 
       headers: { "Access-Token": localStorage.getItem("token").replace(/^"(.*)"$/, '$1') }
     }).then(response => response.json());
-    this.forceUpdate();
     localStorage.setItem("enable", JSON.stringify(true));
+    this.forceUpdate();
   }
 
   restart = () => {
@@ -80,7 +83,7 @@ class Main extends Component {
 
                   <div>
                     {
-                      !localStorage.getItem("email") ?
+                      !localStorage.getItem("token") ?
                       <ul>
                         <li>
                           <Link style={{ color: 'black' }} to="/products" onClick={this.notEnableImg}>Products</Link>
@@ -91,11 +94,8 @@ class Main extends Component {
                         <li>
                           <Link style={{ color: 'black' }} to="/singup" onClick={this.notEnableImg}>Register</Link>
                         </li>
-                        <li>
-                          <Link style={{ color: 'black' }} to="/" onClick={this.leave}>Leave</Link>
-                        </li>
                       </ul>
-                      : this.state.email.includes("admin@ukr.net") || localStorage.getItem("email").includes("admin@ukr.net") ?
+                      : localStorage.getItem("token") && this.state.email === "admin@ukr.net" ?
                       <ul>
                         <li>
                           <Link style={{ color: 'black' }} to="/products" onClick={this.notEnableImg}>Products</Link>
@@ -128,7 +128,7 @@ class Main extends Component {
             </header>
             { localStorage.getItem("enable") === "true" ? <Content/> : null}
             <Switch>
-              <Route path="/products" component={<Products email={this.state.email}/>} />
+              <Route path="/products" component={() => <Products user={this.state.user.id} />} />
               <Route path="/cart" component={Cart} />
               <Route path="/singin" render={() => <SingIn restart={this.restart}/> } />
               <Route path="/singup" component={SingUp} />

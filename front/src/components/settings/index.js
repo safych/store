@@ -1,7 +1,5 @@
 import { Component } from 'react';
 
-import "./style.css";
-
 class Settings extends Component {
   render() {
     return(

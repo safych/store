@@ -19,7 +19,6 @@ class TokensController < ApplicationController
   end
 
   def destroy
-    # byebug
     token = Token.find_by(access_token: request.headers['Access-Token'])
     token.destroy
     head(:no_content)

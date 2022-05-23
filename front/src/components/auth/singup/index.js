@@ -6,6 +6,9 @@ import Url from "../../../mixins/apiUrl";
 import { Redirect } from "react-router-dom";
 import validator from 'validator';
 
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
 class SingUp extends Component {
   constructor() {
     super();
@@ -101,14 +104,15 @@ class SingUp extends Component {
     return (
       <div>
         { this.state.redir === true ? <Redirect to="/singin" /> : null }
+        { localStorage.getItem("token") ? <Redirect to="/products" /> : null }
         <div className="container">
           <div className="sign-up-form">
             <h2>Sing up</h2>
-              <input placeholder="name" value={this.state.name} onChange={this.setName} />
-              <input placeholder="surname" value={this.state.surname} onChange={this.setSurname} />
-              <input placeholder="number phone" value={this.state.numberPhone} onChange={this.setNumberPhone} />
-              <input placeholder="email" value={this.state.email} onChange={this.setEmail} />
-              <input placeholder="password" value={this.state.password} onChange={this.setPassword} />
+              <p><TextField id="outlined-basic" label="name" variant="outlined" value={this.state.name} onChange={this.setName} /></p>
+              <p><TextField id="outlined-basic" label="surname" variant="outlined" value={this.state.surname} onChange={this.setSurname} /></p>
+              <p><TextField id="outlined-basic" label="number phone" variant="outlined" value={this.state.numberPhone} onChange={this.setNumberPhone} /></p>
+              <p><TextField type="email" id="outlined-basic" label="email" variant="outlined" value={this.state.email} onChange={this.setEmail} /></p>
+              <TextField type="password" id="outlined-basic" label="password" variant="outlined" value={this.state.password} onChange={this.setPassword} />
               <p style={{ color: 'red', fontSize: '10px' }}>{this.state.error}</p>
               <button className="singUpBtn" onClick={this.check}>Register</button>
           </div>

@@ -19,13 +19,13 @@ class Products extends Component {
       fetch(Url + "products", {
         method: 'GET',
       })
-            .then(response => response.json())
-            .then(data => {
-            data.forEach(input => {
-              this.setState(prevState => ({
-                products: [...prevState.products, input]
-              }));
-            })
+      .then(response => response.json())
+      .then(data => {
+        data.forEach(input => {
+          this.setState(prevState => ({
+            products: [...prevState.products, input]
+          }));
+        })
       })
     }
 
@@ -35,7 +35,7 @@ class Products extends Component {
 
 
     buy = (product) => {
-      
+      console.log(this.props.user);
     }
 
     render() {

@@ -24,21 +24,21 @@ class Content extends Component {
                   <p className="title">Embroidered shirts</p>
                   <p className="desc">occupies an important place among the various branches of Ukrainian decorative arts</p>
                 </div>
-                {/* <img src={require('../images/shirt.jpeg')} /> */}
+                <img src={require('../images/shirt.jpeg')} />
               </div>
               <div className="feature">
                 <div className="content">
                   <p className="title">Dresses</p>
                   <p className="desc">Upper mesh material provides proper vent</p>
                 </div>
-                {/* <img src={require('../images/dresses.jpeg')} /> */}
+                <img src={require('../images/dresses.jpeg')} />
               </div>
               <div className="feature">
                 <div className="content">
                   <p className="title">Blouses</p>
                   <p className="desc">Upper mesh material provides proper vent</p>
                 </div>
-                {/* <img src={require('../images/blouses.jpeg')} /> */}
+                <img src={require('../images/blouses.jpeg')} />
               </div>
             </section>
       </div>

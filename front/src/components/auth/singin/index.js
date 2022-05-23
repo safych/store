@@ -5,6 +5,9 @@ import { Redirect } from "react-router-dom";
 
 import Url from "../../../mixins/apiUrl";
 
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
 class SingIn extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +39,10 @@ class SingIn extends Component {
       })
     })
     .then(response => response.json())
-    .then(data => localStorage.setItem("token", JSON.stringify(data.access_token)));
+    .then(data => {
+      localStorage.setItem("token", JSON.stringify(data.access_token));
+      this.props.restart();
+    });
     
     // fetch(Url + 'admins', {
     //   method: 'GET',
@@ -88,8 +94,8 @@ class SingIn extends Component {
           <div className="sign-in-form">
             <h2>Sing in</h2>
             {/* <form onSubmit={this.handleSubmit}> */}
-              <p><input placeholder="email" value={this.state.email} onChange={this.setEmail} /></p>
-              <input placeholder="password" value={this.state.password} onChange={this.setPassword} />
+              <p><TextField type="email" id="outlined-basic" label="email" variant="outlined" value={this.state.email} onChange={this.setEmail} /></p>
+              <TextField type="password" id="outlined-basic" label="password" variant="outlined" value={this.state.password} onChange={this.setPassword} />
               <p style={{ color: 'red', fontSize: '12px' }}>{this.state.error}</p>
               <button className="singInBtn" onClick={this.login}>Login</button>
             {/* </form> */} 

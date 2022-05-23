@@ -1,15 +1,15 @@
 .container {
-    height: 502px;
-    width: 554px;
+    height: 702px;
+    width: 654px;
     overflow: hidden;
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10%;
+    margin-top: 15%;
   }
   
   .container .sign-up-form {
-    width: 300px;
+    width: 500px;
     background: white;
     border-radius: 20px;
     box-shadow: 1px 1px 5px black;
@@ -19,7 +19,7 @@
   }
   
   .container .sign-up-form {
-    height: 400px;
+    height: 550px;
   }
   
   .container .box {
