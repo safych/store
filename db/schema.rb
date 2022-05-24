@@ -57,10 +57,12 @@ ActiveRecord::Schema.define(version: 2022_05_17_110708) do
 
   create_table "tokens", force: :cascade do |t|
     t.integer "user_id"
+    t.integer "admin_id"
     t.string "access_token", null: false
     t.datetime "expire_at", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["admin_id"], name: "index_tokens_on_admin_id"
     t.index ["user_id"], name: "index_tokens_on_user_id"
   end
 
@@ -78,5 +80,6 @@ ActiveRecord::Schema.define(version: 2022_05_17_110708) do
   add_foreign_key "cart_items", "users", on_delete: :cascade
   add_foreign_key "categories_products", "categories", on_delete: :cascade
   add_foreign_key "categories_products", "products", on_delete: :cascade
+  add_foreign_key "tokens", "admins", on_delete: :cascade
   add_foreign_key "tokens", "users", on_delete: :cascade
 end

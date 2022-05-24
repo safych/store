@@ -24,11 +24,10 @@ class Main extends Component {
     this.state= {
       user: ""
     }
+    localStorage.setItem("enable", JSON.stringify(true));
   }
 
   componentDidMount() {
-    localStorage.setItem("enable", JSON.stringify(true));
-
     if (localStorage.getItem("token")) {
       fetch(Url + 'info', {
         method: 'GET',
@@ -55,7 +54,7 @@ class Main extends Component {
       headers: { "Access-Token": localStorage.getItem("token").replace(/^"(.*)"$/, '$1') }
     }).then(response => response.json());
     localStorage.setItem("enable", JSON.stringify(true));
-    this.forceUpdate();
+    this.restart();
   }
 
   restart = () => {
@@ -95,7 +94,7 @@ class Main extends Component {
                           <Link style={{ color: 'black' }} to="/singup" onClick={this.notEnableImg}>Register</Link>
                         </li>
                       </ul>
-                      : localStorage.getItem("token") && this.state.email === "admin@ukr.net" ?
+                      : localStorage.getItem("token") && this.state.user.email === "admin@ukr.net" ?
                       <ul>
                         <li>
                           <Link style={{ color: 'black' }} to="/products" onClick={this.notEnableImg}>Products</Link>
@@ -132,7 +131,7 @@ class Main extends Component {
               <Route path="/cart" component={Cart} />
               <Route path="/singin" render={() => <SingIn restart={this.restart}/> } />
               <Route path="/singup" component={SingUp} />
-              <Route path="/admin" component={Admin} />
+              <Route path="/admin" component={() => <Admin name={this.state.user.name} />} />
               <Route path="/settings" component={Settings} />
             </Switch>
           </div>

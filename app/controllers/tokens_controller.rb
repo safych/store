@@ -5,10 +5,11 @@ require './app/services/authenticate_service'
 
 class TokensController < ApplicationController
   def create
-    user = AuthenticateService.new(params[:email], params[:password_digest]).call
-    return head(401) if user.nil?
+    admin = AuthenticateService.new(params[:email], params[:password_digest]).call_admin
+    user = AuthenticateService.new(params[:email], params[:password_digest]).call_user
+    return head(401) if user.nil? && admin.nil?
 
-    token = Token.new(user: user, access_token: SecureRandom.hex,
+    token = Token.new(user: user, admin: admin, access_token: SecureRandom.hex,
                       expire_at: 1.week.from_now)
 
     if token.save

@@ -19,11 +19,15 @@ import CheckroomIcon from '@mui/icons-material/Checkroom';
 import "./style.css";
 
 class Admin extends Component {
+    constructor(props) {
+        super();
+    }
+    
     render() {
         return (
             <Router>
             <div>
-                <h1>Admin page. Hello { localStorage.getItem("name").replace(/^"(.*)"$/, '$1') }</h1>
+                <h1>Admin page. Hello { this.props.name }</h1>
                 <div className="header">
                     <ul className="mnu_top">
                         <li>
