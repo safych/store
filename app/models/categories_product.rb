@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 class CategoriesProduct < ApplicationRecord
-  belongs_to :product
-  belongs_to :category
+  belongs_to :product, optional: true
+  belongs_to :categorie, optional: true
 end

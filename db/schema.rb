@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_17_110708) do
+ActiveRecord::Schema.define(version: 2022_06_05_123955) do
 
   create_table "admins", force: :cascade do |t|
     t.string "name", null: false
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2022_05_17_110708) do
   create_table "cart_items", force: :cascade do |t|
     t.integer "user_id"
     t.integer "product_id"
-    t.string "items_count", null: false
+    t.integer "items_count", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["product_id"], name: "index_cart_items_on_product_id"
@@ -45,12 +45,31 @@ ActiveRecord::Schema.define(version: 2022_05_17_110708) do
     t.index ["product_id"], name: "index_categories_products_on_product_id"
   end
 
+  create_table "order_items", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "order_id"
+    t.integer "items_count", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["product_id"], name: "index_order_items_on_product_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "price", null: false
+    t.string "status", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name", null: false
-    t.text "description"
     t.string "size", null: false
     t.integer "items_left", null: false
     t.integer "price", null: false
+    t.string "image", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -72,6 +91,7 @@ ActiveRecord::Schema.define(version: 2022_05_17_110708) do
     t.string "email", null: false
     t.string "password_digest", null: false
     t.string "number_phone", null: false
+    t.string "recovery_code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -80,6 +100,9 @@ ActiveRecord::Schema.define(version: 2022_05_17_110708) do
   add_foreign_key "cart_items", "users", on_delete: :cascade
   add_foreign_key "categories_products", "categories", on_delete: :cascade
   add_foreign_key "categories_products", "products", on_delete: :cascade
+  add_foreign_key "order_items", "orders", on_delete: :cascade
+  add_foreign_key "order_items", "products", on_delete: :cascade
+  add_foreign_key "orders", "users", on_delete: :cascade
   add_foreign_key "tokens", "admins", on_delete: :cascade
   add_foreign_key "tokens", "users", on_delete: :cascade
 end

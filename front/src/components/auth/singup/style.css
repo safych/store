@@ -1,68 +1,90 @@
-.container {
+@media only screen and (max-width: 678px) {
+  .container {
     height: 702px;
+    width: 254px;
+    margin-top: 15%;
+    margin-left: 10%;
+  }
+}
+
+@media only screen and (min-width: 920px) {
+  .container {
+    height: 502px;
+    width: 520px;
+    margin-top: 2%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .container {
+    height: 602px;
     width: 654px;
     overflow: hidden;
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 15%;
+    margin-top: 5%;
+    padding-top: 5%;
+    padding-bottom: 2%;
   }
+}
+
   
-  .container .sign-up-form {
-    width: 500px;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 1px 1px 5px black;
-    text-align: center;
-    line-height: 50px;
-    margin-left: 2px;
-  }
-  
-  .container .sign-up-form {
-    height: 550px;
-  }
-  
-  .container .box {
-    border: none;
-    outline: none;
-    padding: wpx;
-    margin-top: 30px;
-    border-bottom: 2.4px solid black;
-  }
-  
-  .container .box:focus {
-    border-color: green;
-  }
-  
-  .container .singUpBtn {
-    height: 40px;
-    width: 200px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    margin-top: 80px;
-    border-radius: 30px;
-  }
-  
-  .container .singUpBtn:hover {
-    background: deeppink;
-    color: white;
-  }
-  
-  .container .sign-up-form .singUpBtn {
-    margin-top: 5px;
-  }
-  
-  .switch-buttons {
-    position: absolute;
-    top: 20%;
-  }
-  
-  .switch-buttons a {
-    color: white;
-    text-decoration: none;
-    padding: 5px;
-    margin: 10px;
-    font-size: 20px;
-    transition: .5s;
-  }
+.container .sign-up-form {
+  width: 500px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 1px 1px 5px black;
+  text-align: center;
+  line-height: 50px;
+  margin-left: 2px;
+}
+
+/* .container .sign-up-form {
+  height: 550px;
+} */
+
+.container .box {
+  border: none;
+  outline: none;
+  padding: wpx;
+  margin-top: 30px;
+  border-bottom: 2.4px solid black;
+}
+
+.container .box:focus {
+  border-color: green;
+}
+
+.container .singUpBtn {
+  height: 40px;
+  width: 200px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 80px;
+  border-radius: 30px;
+}
+
+.container .singUpBtn:hover {
+  background: deeppink;
+  color: white;
+}
+
+.container .sign-up-form .singUpBtn {
+  margin-top: 5px;
+}
+
+.switch-buttons {
+  position: absolute;
+  top: 20%;
+}
+
+.switch-buttons a {
+  color: white;
+  text-decoration: none;
+  padding: 5px;
+  margin: 10px;
+  font-size: 20px;
+  transition: .5s;
+}

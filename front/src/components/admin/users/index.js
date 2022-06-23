@@ -4,14 +4,6 @@ import Url from "../../../mixins/apiUrl";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-
 class Users extends Component {
     constructor() {
         super();
@@ -28,20 +20,13 @@ class Users extends Component {
             editEmail: "",
             editPassword: "",
             editNumberPhone: "",
-            users: []
+            searchByPhone: "",
+            searchById: "",
+            searchByEmail: "",
+            findUser: []
         };
 
-        fetch(Url + 'users', {
-            method: 'GET',
-          })
-              .then(response => response.json())
-              .then(data => {
-                data.forEach(input => {
-                   this.setState(prevState => ({
-                     users: [...prevState.users, input]
-                   }));
-                })
-        })
+        localStorage.setItem("enable", JSON.stringify(false));
     }
 
     addUser = () => {
@@ -49,7 +34,7 @@ class Users extends Component {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({ 
                 name: this.state.addName,
@@ -63,7 +48,14 @@ class Users extends Component {
     }
 
     deleteUser = () => {
-        fetch(Url + "users/" + this.state.deleteId, { method: 'DELETE' });
+        fetch(Url + "users/" + this.state.deleteId, { 
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem("token").replace(/^"(.*)"$/, '$1')
+            }
+        });
     }
 
     editUser = () => {
@@ -71,13 +63,14 @@ class Users extends Component {
             method: 'PUT',
             headers: {
               'Accept': 'application/json',
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': localStorage.getItem("token").replace(/^"(.*)"$/, '$1')
             },
             body: JSON.stringify({ 
                 name: this.state.editName,
                 surname: this.state.editSurname,
                 email: this.state.editEmail,
-                password: this.state.editPassword,
+                password_digest: this.state.editPassword,
                 number_phone: this.state.editNumberPhone
             })
         });
@@ -131,60 +124,108 @@ class Users extends Component {
         this.setState({editNumberPhone: event.target.value});
     }
 
+    setSearchByPhone = (event) => {
+        this.setState({searchByPhone: event.target.value});
+    }
+
+    setSearchByEmail = (event) => {
+        this.setState({searchByEmail: event.target.value});
+    }
+
+    setSearchById = (event) => {
+        this.setState({searchById: event.target.value});
+    }
+
+    searchPhone = () => {
+        fetch(Url + 'searchUserByPhone', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'User-Phone': this.state.searchByPhone,
+                'Authorization': localStorage.getItem("token").replace(/^"(.*)"$/, '$1')
+            }
+          })
+              .then(response => response.json())
+              .then(data => {
+                this.setState({ findUser: data });
+        })
+    }
+
+    searchEmail = () => {
+        fetch(Url + 'searchUserByEmail', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'User-Email': this.state.searchByEmail,
+                'Authorization': localStorage.getItem("token").replace(/^"(.*)"$/, '$1')
+            }
+          })
+              .then(response => response.json())
+              .then(data => {
+                this.setState({ findUser: data });
+        })
+    }
+
+    searchId = () => {
+        fetch(Url + 'users/' + this.state.searchById, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem("token").replace(/^"(.*)"$/, '$1')
+            }
+        })
+        .then(response => response.json())
+              .then(data => {
+                this.setState({ findUser: data });
+        })
+    }
+
     render() {
         return(
             <div>
-                <h2>Users</h2>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                        <TableRow>
-                            <TableCell style={{ "font-weight": "bold" }}>Id</TableCell>
-                            <TableCell align="center" style={{ "font-weight": "bold" }}>Name</TableCell>
-                            <TableCell align="center" style={{ "font-weight": "bold" }}>Surname</TableCell>
-                            <TableCell align="center" style={{ "font-weight": "bold" }}>Email</TableCell>
-                            <TableCell align="center" style={{ "font-weight": "bold" }}>Password</TableCell>
-                            <TableCell align="center" style={{ "font-weight": "bold" }}>Number phone</TableCell>
-                        </TableRow>
-                        </TableHead>
-                        <TableBody>
-                        {   
-                            this.state.users.map(user => 
-                                <TableRow
-                                key={user.id}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {user.id}
-                                    </TableCell>
-                                    <TableCell align="center">{user.name}</TableCell>
-                                    <TableCell align="center">{user.surname}</TableCell>
-                                    <TableCell align="center">{user.email}</TableCell>
-                                    <TableCell align="center">{user.password}</TableCell>
-                                    <TableCell align="center">{user.number_phone}</TableCell>
-                                </TableRow>
-                        )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <h3>Add user</h3>
-                <p><TextField placeholder="name" value={this.state.addName} onChange={this.setAddName} /></p>
-                <p><TextField placeholder="surname" value={this.state.addSurname} onChange={this.setAddSurname} /></p>
-                <p><TextField placeholder="email" value={this.state.addEmail} onChange={this.setAddEmail} /></p>
-                <p><TextField placeholder="password" value={this.state.addPassword} onChange={this.setAddPassword} /></p>
-                <p><TextField placeholder="number phone" value={this.state.addNumberPhone} onChange={this.setAddNumberPhone} /></p>
-                <Button variant="contained" onClick={this.addUser}>Create</Button>
-                <h3>Delete user</h3>
-                <p><TextField placeholder="id" type="number" value={this.state.deleteId} onChange={this.setDeleteId} /></p>
-                <Button variant="contained" onClick={this.deleteUser}>Delete</Button>
-                <h3>Edit user</h3>
-                <p><TextField placeholder="id" type="number" value={this.state.editId} onChange={this.setEditId} /></p>
-                <p><TextField placeholder="name" value={this.state.editName} onChange={this.setEditName} /></p>
-                <p><TextField placeholder="surname" value={this.state.editSurname} onChange={this.setEditSurname} /></p>
-                <p><TextField placeholder="email" value={this.state.editEmail} onChange={this.setEditEmail} /></p>
-                <p><TextField placeholder="password" value={this.state.editPassword} onChange={this.setEditPassword} /></p>
-                <p><TextField placeholder="number phone" value={this.state.editNumberPhone} onChange={this.setEditNumberPhone} /></p>
-                <Button variant="contained" onClick={this.editUser}>Update</Button>
+                <h2>Користувачі</h2>
+                {
+                    Object.keys(this.state.findUser).length === 0 ?
+                        null
+                    :
+                        <ul>
+                            <li>Ім'я: {this.state.findUser.name}</li>
+                            <li>Прізвище: {this.state.findUser.surname}</li>
+                            <li>Електронна пошта: {this.state.findUser.email}</li>
+                            <li>Пароль: {this.state.findUser.password_digest}</li>
+                            <li>Номер телефону: {this.state.findUser.number_phone}</li>
+                        </ul>
+                }
+                <p>Пошук за ID</p>
+                <p><TextField placeholder="ID" value={this.state.searchById} onChange={this.setSearchById} /></p>
+                <Button variant="contained" onClick={this.searchId}>Пошук</Button>
+                <p>Пошук за номером телефону</p>
+                <p><TextField placeholder="номер телефону" value={this.state.searchByPhone} onChange={this.setSearchByPhone} /></p>
+                <Button variant="contained" onClick={this.searchPhone}>Пошук</Button>
+                <p>Пошук за електронною поштою</p>
+                <p><TextField placeholder="електронна пошта" value={this.state.searchByEmail} onChange={this.setSearchByEmail} /></p>
+                <Button variant="contained" onClick={this.searchEmail}>Пошук</Button>
+                <h3>Додати користувача</h3>
+                <p><TextField placeholder="Ім'я" value={this.state.addName} onChange={this.setAddName} /></p>
+                <p><TextField placeholder="Прізвище" value={this.state.addSurname} onChange={this.setAddSurname} /></p>
+                <p><TextField placeholder="Електронна пошта" value={this.state.addEmail} onChange={this.setAddEmail} /></p>
+                <p><TextField placeholder="Пароль" value={this.state.addPassword} onChange={this.setAddPassword} /></p>
+                <p><TextField placeholder="Номер телефону" value={this.state.addNumberPhone} onChange={this.setAddNumberPhone} /></p>
+                <Button variant="contained" onClick={this.addUser}>Створити</Button>
+                <h3>Видалити користувача</h3>
+                <p><TextField placeholder="ID" type="number" value={this.state.deleteId} onChange={this.setDeleteId} /></p>
+                <Button variant="contained" onClick={this.deleteUser}>Видалити</Button>
+                <h3>Редагувати користувача</h3>
+                <p><TextField placeholder="ID" type="number" value={this.state.editId} onChange={this.setEditId} /></p>
+                <p><TextField placeholder="Ім'я" value={this.state.editName} onChange={this.setEditName} /></p>
+                <p><TextField placeholder="Прізвище" value={this.state.editSurname} onChange={this.setEditSurname} /></p>
+                <p><TextField placeholder="Електронна пошта" value={this.state.editEmail} onChange={this.setEditEmail} /></p>
+                <p><TextField placeholder="Пароль" value={this.state.editPassword} onChange={this.setEditPassword} /></p>
+                <p><TextField placeholder="Номер телефону" value={this.state.editNumberPhone} onChange={this.setEditNumberPhone} /></p>
+                <Button variant="contained" onClick={this.editUser}>Оновити</Button>
             </div>
         );
     }

@@ -1,9 +1,28 @@
-* {
+  * {
     box-sizing: border-box;
   }
 
+  .container .card .content Button {
+    background: black;
+  }
+
   @media (max-width: 767px) {
+    .filterBar {
+      width: 240px;
+      padding: 10px;
+      margin-top: 100px;
+      margin-bottom: 130px;
+      margin-left: 50px;
+      border-radius: 10px;
+      box-shadow: 1px 1px 5px black;
+    }
+
+    .filterBar Button {
+      width: 100%;
+    }
+
     .container {
+      width: 50%;
       position: relative;
       z-index: 10;
       display: flex;
@@ -13,8 +32,7 @@
     .container .card {
       position: relative;
       width: 320px;
-      height: 400px;
-      margin: 20px 40px;
+      height: 450px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -98,6 +116,122 @@
       font-weight: 600;
       letter-spacing: 1px;
       color: #fff;
+    }
+  }
+
+  @media only screen and (min-width: 920px) {
+    .container {
+      width: 50%;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      padding-top: 3%;
+      padding-left: 8%;
+    }
+
+    .container .card {
+      position: relative;
+      width: 70%;
+      height: 90%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      /* backgroup-filter: blur(15px); */
+    }
+
+    .container .card .imgBx {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      transform: translateY(-40px);
+    }
+
+    .container .card .imgBx img {
+      max-width: 66%;
+    }
+
+    .container .card .imgBx h2 {
+      color: #111;
+      font-weight: 600;
+    }
+
+    .container .card .imgBx {
+      position: relative;
+      width: 65%;
+      height: 65%;
+    }
+
+    .container .card .content {
+      position: absolute;
+      top: 70%;
+      bottom: 2%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .container .card .content .size {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1% 3%;
+    }
+
+    .container .card .content .size h3 {
+      color: #111;
+      font-weight: 300;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1%;
+      margin-right: 2%;
+    }
+
+    .container .card .content .size p {
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 22px;
+      display: inline-block;
+      color: #fff;
+      background: #111;
+      border-radius: 4px;
+      font-size: 12px;
+      margin: 0 2px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .container .card .content .buy {
+      position: relative;
+      top: 5px;
+      display: inline-block;
+      padding: 6px 15px;
+      background: #111;
+      border-radius: 20px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+
+    .filterBar {
+      width: 20%;
+      position: absolute;
+      padding: 10px;
+      margin-top: 150px;
+      margin-left: -20px;
+      border-radius: 10px;
+      box-shadow: 1px 1px 5px black;
+      position: fixed;
+    }
+
+    .filterBar Button {
+      width: 100%;
     }
   }
 
@@ -204,24 +338,24 @@
       margin: 0 5px;
       font-weight: 500;
       transition: 0.5s;
-      cursor: pointer;
     }
 
-    .container .card .content .buy {
-      position: relative;
-      top: 10px;
-      display: inline-block;
-      padding: 12px 30px;
-      background: #111;
-      border-radius: 40px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      color: #fff;
-      text-decoration: none;
-      text-transform: uppercase;
+    .container .card .content Button:hover {
+      opacity: 0.33;
     }
-  
-    .container .card .content .buy:hover {
-      background: #9bdc28;
+
+    .filterBar {
+      width: 240px;
+      position: absolute;
+      padding: 10px;
+      margin-top: 150px;
+      margin-left: -150px;
+      border-radius: 10px;
+      box-shadow: 1px 1px 5px black;
+      position: fixed;
+    }
+
+    .filterBar Button {
+      width: 100%;
     }
   }

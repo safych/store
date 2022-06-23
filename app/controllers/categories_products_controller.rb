@@ -2,6 +2,7 @@
 
 class CategoriesProductsController < ApplicationController
   before_action :set_categories_product, only: %i[show update destroy]
+  before_action :authenticate_admin!
 
   # GET /categories_products
   def index
@@ -17,13 +18,7 @@ class CategoriesProductsController < ApplicationController
 
   # POST /categories_products
   def create
-    @categories_product = CategoriesProduct.new(categories_product_params)
 
-    if @categories_product.save
-      render json: @categories_product, status: :created, location: @categories_product
-    else
-      render json: @categories_product.errors, status: :unprocessable_entity
-    end
   end
 
   # PATCH/PUT /categories_products/1
@@ -37,7 +32,8 @@ class CategoriesProductsController < ApplicationController
 
   # DELETE /categories_products/1
   def destroy
-    @categories_product.destroy
+    categories_product = CategoriesProduct.find_by(product_id: request.headers['Product-ID'])
+    categories_product.destroy
   end
 
   private

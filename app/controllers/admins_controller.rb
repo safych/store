@@ -1,13 +1,23 @@
 # frozen_string_literal: true
 
 class AdminsController < ApplicationController
+  before_action :check_token!
   before_action :set_admin, only: %i[show update destroy]
+  before_action :authenticate_admin!
 
   # GET /admins
   def index
     @admins = Admin.all
-
     render json: @admins
+  end
+
+  def balance
+    price = 0
+    orders = Order.where(status: "Відправлено")
+    orders.map do |a|
+      price += a.price
+    end
+    render json: price
   end
 
   # GET /admins/1
@@ -49,6 +59,6 @@ class AdminsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def admin_params
-    params.require(:admin).permit(:name, :email, :password)
+    params.require(:admin).permit(:name, :email, :password_digest)
   end
 end

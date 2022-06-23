@@ -5,9 +5,8 @@ import Url from "../../../mixins/apiUrl";
 
 import { Redirect } from "react-router-dom";
 import validator from 'validator';
-
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 
 class SingUp extends Component {
   constructor() {
@@ -22,6 +21,7 @@ class SingUp extends Component {
       flag: [],
       redir: false
     };
+    localStorage.setItem("enable", JSON.stringify(false));
   }
 
   setName = (event) => {
@@ -48,37 +48,22 @@ class SingUp extends Component {
     const beginWithoutDigit = /^\D.*$/;
     const withoutSpecialChars = /^[^-() /]*$/;
     const containsLetters = /^.*[a-zA-Z]+.*$/;
-
-    fetch(Url + 'users', {
-      method: 'GET',
-    })
-        .then(response => response.json())
-        .then(data => {
-           for (var i = 0; i < data.length; i++) {  
-              if (data[i].email === this.state.email || data[i].number_phone === this.state.numberPhone) {
-                this.state.flag.push('new value');
+    
+    if (this.state.name !== "" && this.state.surname !== "" && this.state.email !== "" &&
+    this.state.password !== "" && this.state.numberPhone !== "") {
+      if(validator.isEmail(this.state.email) && validator.isMobilePhone(this.state.numberPhone, 'uk-UA') &&
+            beginWithoutDigit.test(this.state.password) && withoutSpecialChars.test(this.state.password) && 
+            containsLetters.test(this.state.password) && this.state.password.length >= 8) {
+              if(this.state.email !== "admin@ukr.net") {
+                this.registration();
+              } else {
                 this.setState({ error: "Коричтувач з таким email чи номером телефона уже існує" });
               }
-           }
-        })
-    
-    if (!this.state.flag.length) {
-      if (this.state.name !== "" && this.state.surname !== "" && this.state.email !== "" &&
-      this.state.password !== "" && this.state.numberPhone !== "") {
-        if(validator.isEmail(this.state.email) && validator.isMobilePhone(this.state.numberPhone, 'uk-UA') &&
-              beginWithoutDigit.test(this.state.password) && withoutSpecialChars.test(this.state.password) && 
-              containsLetters.test(this.state.password) && this.state.password.length >= 8) {
-                if(this.state.email !== "admin@ukr.net") {
-                  this.registration();
-                } else {
-                  this.setState({ error: "Коричтувач з таким email чи номером телефона уже існує" });
-                }
-        } else {
-          this.setState({ error: "Некоректно введено пароль, email чи номер телефону" });
-        }
       } else {
-        this.setState({ error: "Запоніть всі поля!!" });
+        this.setState({ error: "Некоректно введено пароль, email чи номер телефону" });
       }
+    } else {
+      this.setState({ error: "Запоніть всі поля!!" });
     }
   }
 
@@ -90,31 +75,37 @@ class SingUp extends Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ 
-            name: this.state.name, 
-            surname: this.state.surname, 
-            email: this.state.email, 
-            password: this.state.password, 
-            number_phone: this.state.numberPhone
+          email: this.state.email, 
+          password_digest: this.state.password,
+          name: this.state.name, 
+          surname: this.state.surname,
+          number_phone: this.state.numberPhone
         })
-      });
-      this.setState({ redir: true });
+      })
+      .then(response => response.json())
+        .then(data => {
+          this.setState({ error: data });
+        });
+      if (this.state.error === "") {
+        this.setState({ redir: true });
+      }
   }
 
   render() {
     return (
       <div>
+        { this.state.error ? <Alert severity="error">{this.state.error}</Alert> : null }
         { this.state.redir === true ? <Redirect to="/singin" /> : null }
         { localStorage.getItem("token") ? <Redirect to="/products" /> : null }
         <div className="container">
           <div className="sign-up-form">
-            <h2>Sing up</h2>
-              <p><TextField id="outlined-basic" label="name" variant="outlined" value={this.state.name} onChange={this.setName} /></p>
-              <p><TextField id="outlined-basic" label="surname" variant="outlined" value={this.state.surname} onChange={this.setSurname} /></p>
-              <p><TextField id="outlined-basic" label="number phone" variant="outlined" value={this.state.numberPhone} onChange={this.setNumberPhone} /></p>
-              <p><TextField type="email" id="outlined-basic" label="email" variant="outlined" value={this.state.email} onChange={this.setEmail} /></p>
-              <TextField type="password" id="outlined-basic" label="password" variant="outlined" value={this.state.password} onChange={this.setPassword} />
-              <p style={{ color: 'red', fontSize: '10px' }}>{this.state.error}</p>
-              <button className="singUpBtn" onClick={this.check}>Register</button>
+            <h2>Реєстрація</h2>
+              <p><TextField id="outlined-basic" label="Ім'я" variant="outlined" value={this.state.name} onChange={this.setName} /></p>
+              <p><TextField id="outlined-basic" label="Прізвище" variant="outlined" value={this.state.surname} onChange={this.setSurname} /></p>
+              <p><TextField id="outlined-basic" label="Ноомер телефону" variant="outlined" value={this.state.numberPhone} onChange={this.setNumberPhone} /></p>
+              <p><TextField type="email" id="outlined-basic" label="Електронна пошта" variant="outlined" value={this.state.email} onChange={this.setEmail} /></p>
+              <p><TextField type="password" id="outlined-basic" label="Пароль" variant="outlined" value={this.state.password} onChange={this.setPassword} /></p>
+              <button className="singUpBtn" onClick={this.check}>Зареєструватися</button>
           </div>
         </div>
       </div>

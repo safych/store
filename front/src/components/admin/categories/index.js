@@ -30,8 +30,15 @@ class Categories extends Component {
             categories_products: []
         };
 
+        localStorage.setItem("enable", JSON.stringify(false));
+        
         fetch(Url + 'categories', {
             method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem("token").replace(/^"(.*)"$/, '$1')
+            }
           })
               .then(response => response.json())
               .then(data => {
@@ -44,6 +51,11 @@ class Categories extends Component {
 
         fetch(Url + 'categories_products', {
             method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem("token").replace(/^"(.*)"$/, '$1')
+            }
           })
               .then(response => response.json())
               .then(data => {
@@ -100,7 +112,8 @@ class Categories extends Component {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': localStorage.getItem("token").replace(/^"(.*)"$/, '$1')
             },
             body: JSON.stringify({ 
                 name: this.state.addName
@@ -110,7 +123,14 @@ class Categories extends Component {
     }
 
     deleteCategory = () => {
-        fetch(Url + "categories/" + this.state.deleteIdCategory, { method: 'DELETE' });
+        fetch(Url + "categories/" + this.state.deleteIdCategory, { 
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem("token").replace(/^"(.*)"$/, '$1')
+            }
+        });
     }
 
     editCategory = () => {
@@ -118,7 +138,8 @@ class Categories extends Component {
             method: 'PUT',
             headers: {
               'Accept': 'application/json',
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': localStorage.getItem("token").replace(/^"(.*)"$/, '$1')
             },
             body: JSON.stringify({ name: this.state.editName })
         });
@@ -127,13 +148,23 @@ class Categories extends Component {
     render() {
         return(
             <div>
-                <h2>Categories</h2>
+                <h2>Категорії</h2>
+                <h3>Додати категорію</h3>
+                <p><TextField placeholder="назва категорії" value={this.state.addName} onChange={this.setAddName} /></p>
+                <Button variant="contained" onClick={this.addCategory}>Створити</Button>
+                <h3>Видалити категорію</h3>
+                <p><TextField placeholder="id категорії" type="number" value={this.state.deleteIdCategory} onChange={this.setDeleteIdCategory} /></p>
+                <Button variant="contained" onClick={this.deleteCategory}>Видалити</Button>
+                <h3>Редагувати категорію</h3>
+                <p><TextField placeholder="id" type="number" value={this.state.editIdCategory} onChange={this.setEditIdCategory} /></p>
+                <p><TextField placeholder="назва категорії" value={this.state.editName} onChange={this.setEditName} /></p>
+                <Button variant="contained" onClick={this.editCategory}>Оновити</Button>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                         <TableRow>
-                            <TableCell style={{ "font-weight": "bold" }}>Id</TableCell>
-                            <TableCell align="center" style={{ "font-weight": "bold" }}>Name</TableCell>
+                            <TableCell style={{ "font-weight": "bold" }}>ID</TableCell>
+                            <TableCell align="center" style={{ "font-weight": "bold" }}>Назва</TableCell>
                         </TableRow>
                         </TableHead>
                         <TableBody>
@@ -152,55 +183,6 @@ class Categories extends Component {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <h3>Add category</h3>
-                <p><TextField placeholder="category" value={this.state.addName} onChange={this.setAddName} /></p>
-                <Button variant="contained" onClick={this.addCategory}>Add</Button>
-                <h3>Delete category</h3>
-                <p><TextField placeholder="id" type="number" value={this.state.deleteIdCategory} onChange={this.setDeleteIdCategory} /></p>
-                <Button variant="contained" onClick={this.deleteCategory}>Delete</Button>
-                <h3>Edit category</h3>
-                <p><TextField placeholder="id" type="number" value={this.state.editIdCategory} onChange={this.setEditIdCategory} /></p>
-                <p><TextField placeholder="name" value={this.state.editName} onChange={this.setEditName} /></p>
-                <Button variant="contained" onClick={this.editCategory}>Update</Button>
-                <h2>Categories for product</h2>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                        <TableRow>
-                            <TableCell style={{ "font-weight": "bold" }}>Id</TableCell>
-                            <TableCell align="center" style={{ "font-weight": "bold" }}>Product id</TableCell>
-                            <TableCell align="center" style={{ "font-weight": "bold" }}>Category id</TableCell>
-                        </TableRow>
-                        </TableHead>
-                        <TableBody>
-                        {   
-                            this.state.categories_products.map(category_product => 
-                                <TableRow
-                                key={category_product.id}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {category_product.id}
-                                    </TableCell>
-                                    <TableCell align="center">{category_product.product_id}</TableCell>
-                                    <TableCell align="center">{category_product.category_id}</TableCell>
-                                </TableRow>
-                        )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <h3>Add category to product</h3>
-                <p><TextField placeholder="product id" value={this.state.addProductId} onChange={this.setAddProductId} /></p>
-                <p><TextField placeholder="category id" value={this.state.addCategoryId} onChange={this.setAddCategoryId} /></p>
-                <Button variant="contained" onClick={this.addCategoryProduct}>Add</Button>
-                <h3>Delete category for product</h3>
-                <p><TextField placeholder="id" type="number" value={this.state.deleteIdCategoryProduct} onChange={this.setDeleteIdCategoryProduct} /></p>
-                <Button variant="contained" onClick={this.deleteCategoryProduct}>Delete</Button>
-                <h3>Edit category for product</h3>
-                <p><TextField placeholder="id" type="number" value={this.state.editIdCategoryProduct} onChange={this.setEditIdCategoryProduct} /></p>
-                <p><TextField placeholder="product id" value={this.state.editProductId} onChange={this.setEditProductId} /></p>
-                <p><TextField placeholder="category id" value={this.state.editCategoryId} onChange={this.setEditCategoryId} /></p>
-                <Button variant="contained" onClick={this.editCategoryProduct}>Update</Button>
             </div>
         );
     }

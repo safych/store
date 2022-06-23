@@ -8,6 +8,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :email, null: false, unique: true
       t.string :password_digest, null: false
       t.string :number_phone, null: false, unique: true
+      t.string :recovery_code
 
       t.timestamps
     end

@@ -9,7 +9,7 @@ class AuthenticateService
   def call_user
     user = User.find_by(email: @email)
     return nil if user.nil?
-    return nil if user.password_digest != @password
+    return nil if user.password != @password
 
     user
   end

@@ -7,9 +7,9 @@ class Content extends Component {
     return (
       <div>
         <section className="hero">
-                <h1>If you want to feel ukrainian not only in words.</h1>
+                <h1>Якщо хочеш відчути себе українцем не тільки на словах.</h1>
 
-                <p className="subhead">Then buy clothes with embroidery from us</p>
+                <p className="subhead">Тоді купуй у нас одяг з вишивкою.</p>
 
                 <svg className="arrows">
                   <path className="a1" d="M0 0 L30 32 L60 0"></path>
@@ -21,22 +21,40 @@ class Content extends Component {
             <section className="more-info">
               <div className="feature">
                 <div className="content">
-                  <p className="title">Embroidered shirts</p>
-                  <p className="desc">occupies an important place among the various branches of Ukrainian decorative arts</p>
+                  <p className="title">Вишиванка</p>
+                  <p className="desc"><p>Вишиванка – символ України,</p>
+                                      <p>Кожної великої родини,</p>
+                                      <p>Нашої історії та мови</p>
+                                      <p>Залюбки вдягаємо її знову.</p>
+                  </p>
                 </div>
                 <img src={require('../images/shirt.jpeg')} />
               </div>
               <div className="feature">
                 <div className="content">
-                  <p className="title">Dresses</p>
-                  <p className="desc">Upper mesh material provides proper vent</p>
+                  <p className="title">Плаття</p>
+                  <p className="desc"><p>Плаття-вишиванку</p>
+                                      <p>Одягаю радо,</p>
+                                      <p>Буду в ній сьогодні</p>
+                                      <p>з друзями гуляти.</p>
+                                      <p>Мені личить унікальний</p>
+                                      <p>Одяг наш національний!</p>
+                  </p>
                 </div>
                 <img src={require('../images/dresses.jpeg')} />
               </div>
               <div className="feature">
                 <div className="content">
-                  <p className="title">Blouses</p>
-                  <p className="desc">Upper mesh material provides proper vent</p>
+                  <p className="title">Блуза</p>
+                  <p className="desc"><p>Узор вручну, широка планка,</p>
+                                      <p>Легенький запах ковели.</p>
+                                      <p>Моя сорочка вишиванка,</p>
+                                      <p>Вся ніби сплетена з трави.</p>
+                                      <p>Дніпра потоки, степ , простори,</p>
+                                      <p>По лівій, правій стороні.</p>
+                                      <p>Червоно – чорні всі узори,</p>
+                                      <p>Мережив ряд на полотні.</p>
+                  </p>
                 </div>
                 <img src={require('../images/blouses.jpeg')} />
               </div>

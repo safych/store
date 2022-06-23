@@ -99,7 +99,7 @@ h1 {
 }
 
 section.hero {
-  color: white;
+  color: black;
   height: 90vh;
   animation: moveDown 1s ease-in-out forwards;
   opacity: 0;
@@ -176,10 +176,33 @@ section.hero {
     font-size: 25px;
   }
 
+  .feature img {
+    width: 18em;
+  }
+
+  .hero-img {
+    left: 55%;
+    right: 0;
+    width: 45%;
+    height: 42em;
+  }
 }
 
 
 @media only screen and (min-width: 920px) {
+  .wrapper {
+    width: 920px;
+    margin: 0 auto;
+  }
+
+  .feature {
+    gap: 0;
+  }
+
+  .arrows {
+    top: 350px;
+  }
+
   .menu {
     display: none;
   }
@@ -191,6 +214,7 @@ section.hero {
     width: auto;
     height: auto;
     background: none;
+    /* width: 60%; */
   }
 
   nav svg.close {
@@ -208,7 +232,7 @@ section.hero {
     font-size: .9rem;
   }
 
-  nav ul a &:hover {
+  nav ul a:hover {
     background: none;
     text-decoration: underline;
   }
@@ -222,10 +246,6 @@ section.hero {
 
   .logo {
     color: black
-
-    span {
-      color: red;
-    }
   }
 
   section.hero {

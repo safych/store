@@ -1,32 +1,46 @@
 # frozen_string_literal: true
 
 class CartItemsController < ApplicationController
+  before_action :check_token!
   before_action :set_cart_item, only: %i[show update destroy]
+  before_action :authenticate_admin!, only: %i[index show update destroy]
+  before_action :authenticate_user!, only: %i[edit_user_cart show_user_cart
+                                              create delete_user_cart]
 
-  # GET /cart_items
   def index
     @cart_items = CartItem.all
-
     render json: @cart_items
   end
 
-  # GET /cart_items/1
   def show
     render json: @cart_item
   end
 
-  # POST /cart_items
-  def create
-    @cart_item = CartItem.new(cart_item_params)
+  def show_user_cart
+    products = []
+    cart_items = CartItem.where(user_id: request.headers['User'])
+    cart_items.map do |a|
+      product = Product.find(a.product_id)
+      products.push({ id: a.id, name: product.name, size: product.size, price: product.price,
+                      image: product.image, count: a.items_count, product: product.id })
+    end
+    render json: products
+  end
 
-    if @cart_item.save
-      render json: @cart_item, status: :created, location: @cart_item
-    else
-      render json: @cart_item.errors, status: :unprocessable_entity
+  def edit_user_cart
+    cart_item = CartItem.find(request.headers['Cart'])
+    cart_item.update(items_count: params[:items_count])
+  end
+
+  def create
+    product = Product.find(request.headers['Product'])
+    if product.items_left >= request.headers['Count'].to_i
+      cart_item = CartItem.new(user_id: request.headers['User'], product_id: request.headers['Product'],
+                               items_count: request.headers['Count'])
+      cart_item.save
     end
   end
 
-  # PATCH/PUT /cart_items/1
   def update
     if @cart_item.update(cart_item_params)
       render json: @cart_item
@@ -35,7 +49,11 @@ class CartItemsController < ApplicationController
     end
   end
 
-  # DELETE /cart_items/1
+  def delete_user_cart
+    cart_item = CartItem.find(request.headers['Cart'])
+    cart_item.destroy
+  end
+
   def destroy
     @cart_item.destroy
   end
