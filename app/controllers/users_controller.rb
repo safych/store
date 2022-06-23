@@ -25,7 +25,8 @@ class UsersController < ApplicationController
   def reset_update_password
     user = User.find_by(email: request.headers['Email'])
     if user.recovery_code.eql? request.headers['Recovery-Code']
-      user.update(password_digest: request.headers['New-Password'], recovery_code: nil)
+      password = BCrypt::Password.create(request.headers['New-Password'])
+      user.update(password_digest: password, recovery_code: nil)
     end
   end
 
@@ -54,7 +55,8 @@ class UsersController < ApplicationController
     token = Token.find_by(access_token: request.headers['Access-Token'])
     data = User.find(token.user_id)
     user = AuthenticateService.new(data.email, request.headers['Old-Password']).call_user
-    user.update(password_digest: request.headers['New-Password'])
+    password = BCrypt::Password.create(request.headers['New-Password'])
+    user.update(password_digest: password)
   end
 
   def update_name_surname
