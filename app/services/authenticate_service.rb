@@ -17,7 +17,7 @@ class AuthenticateService
   def call_admin
     admin = Admin.find_by(email: @email)
     return nil if admin.nil?
-    return nil if admin.password_digest != @password
+    return nil if admin.password != @password
 
     admin
   end

@@ -27,13 +27,9 @@ class AdminsController < ApplicationController
 
   # POST /admins
   def create
-    @admin = Admin.new(admin_params)
-
-    if @admin.save
-      render json: @admin, status: :created, location: @admin
-    else
-      render json: @admin.errors, status: :unprocessable_entity
-    end
+    admin = Admin.new(admin_params)
+    admin.password = params[:password_digest]
+    admin.save!
   end
 
   # PATCH/PUT /admins/1

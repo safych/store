@@ -108,7 +108,7 @@ class Main extends Component {
                           <Link style={{ color: 'black' }} to="/singup" onClick={this.notEnableImg}>Реєстрація</Link>
                         </li>
                       </ul>
-                      : localStorage.getItem("token") && this.state.user.email === "admin@ukr.net" ?
+                      : localStorage.getItem("token") && !this.state.user.surname && !this.state.user.phone_number ?
                       <ul>
                         <li>
                           <Link style={{ color: 'black' }} to="/products" onClick={this.notEnableImg}>Товари</Link>
