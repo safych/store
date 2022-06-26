@@ -75,6 +75,11 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (>= 1.9.0)
+    capistrano-bundler (2.1.0)
+      capistrano (~> 3.1)
+    capistrano-rvm (0.1.2)
+      capistrano (~> 3.0)
+      sshkit (~> 1.2)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
     domain_name (0.5.20190701)
@@ -211,6 +216,8 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
   capistrano (~> 3.17)
+  capistrano-bundler
+  capistrano-rvm
   letter_opener
   listen (~> 3.3)
   mailgun-ruby (~> 1.2.5)

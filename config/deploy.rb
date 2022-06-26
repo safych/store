@@ -4,6 +4,8 @@ lock "~> 3.17.0"
 set :application, "store"
 set :repo_url, "git@github.com:safych/store.git"
 
+set :deploy_to, '/home/deploy/store'
+
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 

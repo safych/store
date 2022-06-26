@@ -37,7 +37,10 @@ group :development do
   gem 'rubocop', require: false
   gem "letter_opener"
   gem 'mailgun-ruby', '~>1.2.5'
+
   gem "capistrano", "~> 3.17", require: false
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
