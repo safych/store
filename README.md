@@ -1,24 +1,14 @@
-# README
+## Store
+This application was created for a shop of Ukrainian clothes.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Table of contents
+* [Requirment](#requirment)
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Requirment
+* Ruby 3.2.1
+* Rails 7.0.4
+* Git
+* Nodejs v16.18.1
+* NPM 8.19.2
+* Yarn 1.22.19
+* ReactJS 18.1.0
