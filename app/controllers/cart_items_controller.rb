@@ -8,8 +8,7 @@ class CartItemsController < ApplicationController
                                               create delete_user_cart]
 
   def index
-    @cart_items = CartItem.all
-    render json: @cart_items
+    render json: CartItem.all
   end
 
   def show
@@ -17,13 +16,7 @@ class CartItemsController < ApplicationController
   end
 
   def show_user_cart
-    products = []
-    cart_items = CartItem.where(user_id: request.headers['User'])
-    cart_items.map do |a|
-      product = Product.find(a.product_id)
-      products.push({ id: a.id, name: product.name, size: product.size, price: product.price,
-                      image: product.image, count: a.items_count, product: product.id })
-    end
+    products = UserCartsListQuery.new(request.headers['User']).list
     render json: products
   end
 
@@ -33,12 +26,7 @@ class CartItemsController < ApplicationController
   end
 
   def create
-    product = Product.find(request.headers['Product'])
-    if product.items_left >= request.headers['Count'].to_i
-      cart_item = CartItem.new(user_id: request.headers['User'], product_id: request.headers['Product'],
-                               items_count: request.headers['Count'])
-      cart_item.save
-    end
+    CartItemCreateService.new(request.headers['Product'], request.headers['Count'], request.headers['User']).create
   end
 
   def update
@@ -60,12 +48,10 @@ class CartItemsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_cart_item
     @cart_item = CartItem.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def cart_item_params
     params.require(:cart_item).permit(:user_id, :product_id, :items_count)
   end

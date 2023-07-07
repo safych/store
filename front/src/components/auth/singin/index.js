@@ -53,7 +53,7 @@ class SingIn extends Component {
   }
 
   login = () => {
-    fetch(Url + 'login', {
+    fetch(Url + 'tokens', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

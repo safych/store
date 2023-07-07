@@ -3,9 +3,12 @@
 Rails.application.routes.draw do
   resources :orders
   resources :order_items
-  post '/login', to: 'tokens#create'
+  resources :tokens, only: :create
+  # resource :profile, only: %i[show]
+  get '/info', to: 'profile#show'
+  resources :cart_items
   post '/logout', to: 'tokens#destroy'
-  get '/info', to: 'profiles#info'
+
   get '/userCarts', to: 'cart_items#show_user_cart'
   post '/editUserCart', to: 'cart_items#edit_user_cart'
   post '/deleteUserCart', to: 'cart_items#delete_user_cart'
@@ -30,7 +33,6 @@ Rails.application.routes.draw do
   get '/infoOrderUser', to: 'orders#info_customer'
   get '/searchUserByPhone', to: 'users#search_user_by_phone'
   get '/searchUserByEmail', to: 'users#search_user_by_email'
-  resources :cart_items
   resources :products
   resources :categories_products
   resources :categories

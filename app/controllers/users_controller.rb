@@ -6,6 +6,7 @@ require 'securerandom'
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
   before_action :authenticate_admin!
+  before_action :set_user_update, only: %i[update_name_surname update_number_phone update_email]
   skip_before_action :authenticate_admin!, only: %i[create update_password
                                                     update_name_surname update_number_phone
                                                     reset_password reset_update_password]
@@ -60,18 +61,15 @@ class UsersController < ApplicationController
   end
 
   def update_name_surname
-    user = User.find(request.headers['User'])
-    user.update(name: params[:name], surname: params[:surname])
+    @user.update(name: params[:name], surname: params[:surname])
   end
 
   def update_number_phone
-    user = User.find(request.headers['User'])
-    user.update(number_phone: params[:number_phone])
+    @user.update(number_phone: params[:number_phone])
   end
 
   def update_email
-    user = User.find(request.headers['User'])
-    user.update(email: params[:email])
+    @user.update(email: params[:email])
   end
 
   def create
@@ -103,12 +101,14 @@ class UsersController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
+  def set_user_update
+    @user = User.find(request.headers['User'])
+  end
+
   def set_user
     @user = User.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def user_params
     params.require(:user).permit(:name, :surname, :email, :password_digest, :number_phone, :recovery_code)
   end

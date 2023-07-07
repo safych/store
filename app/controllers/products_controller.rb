@@ -9,27 +9,11 @@ class ProductsController < ApplicationController
   skip_before_action :authenticate_admin!, only: %i[get_products index]
 
   def get_products
-    products = []
-    order = Order.find(request.headers['Order-ID'])
-    order_items = OrderItem.where(order_id: order.id)
-    order_items.map do |a|
-      product = Product.find(a.product_id)
-      products.push({ id: product.id, name: product.name, size: product.size, price: product.price,
-                      image: product.image, count: a.items_count, user: order.user_id })
-    end
-    render json: products
+    render json: ProductsListQuery.new(request.headers['Order-ID']).list
   end
 
   def admin_get_products
-    products = []
-    order = Order.find(request.headers['Order-ID'])
-    order_items = OrderItem.where(order_id: order.id)
-    order_items.map do |a|
-      product = Product.find(a.product_id)
-      products.push({ id: product.id, name: product.name, size: product.size, price: product.price,
-                      image: product.image, count: a.items_count, user: order.user_id })
-    end
-    render json: products
+    render json: ProductsListQuery.new(request.headers['Order-ID']).list
   end
 
   def create
@@ -59,8 +43,7 @@ class ProductsController < ApplicationController
   end
 
   def index
-    @products = Product.all
-    render json: @products
+    render json: Product.all
   end
 
   def product_by_name
@@ -90,12 +73,10 @@ class ProductsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_product
     @product = Product.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def product_params
     params.require(:product).permit(:name, :size, :items_left, :price, :image)
   end

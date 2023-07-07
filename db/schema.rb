@@ -10,37 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_05_123955) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_06_05_123955) do
   create_table "admins", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
     t.string "password_digest", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "cart_items", force: :cascade do |t|
     t.integer "user_id"
     t.integer "product_id"
     t.integer "items_count", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_cart_items_on_product_id"
     t.index ["user_id"], name: "index_cart_items_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "categories_products", force: :cascade do |t|
     t.integer "product_id"
     t.integer "category_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_categories_products_on_category_id"
     t.index ["product_id"], name: "index_categories_products_on_product_id"
   end
@@ -49,8 +48,8 @@ ActiveRecord::Schema.define(version: 2022_06_05_123955) do
     t.integer "product_id"
     t.integer "order_id"
     t.integer "items_count", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["product_id"], name: "index_order_items_on_product_id"
   end
@@ -59,8 +58,8 @@ ActiveRecord::Schema.define(version: 2022_06_05_123955) do
     t.integer "user_id"
     t.integer "price", null: false
     t.string "status", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -70,17 +69,17 @@ ActiveRecord::Schema.define(version: 2022_06_05_123955) do
     t.integer "items_left", null: false
     t.integer "price", null: false
     t.string "image", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tokens", force: :cascade do |t|
     t.integer "user_id"
     t.integer "admin_id"
     t.string "access_token", null: false
-    t.datetime "expire_at", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "expire_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_tokens_on_admin_id"
     t.index ["user_id"], name: "index_tokens_on_user_id"
   end
@@ -92,8 +91,8 @@ ActiveRecord::Schema.define(version: 2022_06_05_123955) do
     t.string "password_digest", null: false
     t.string "number_phone", null: false
     t.string "recovery_code"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "cart_items", "products", on_delete: :cascade

@@ -6,8 +6,7 @@ class CategoriesController < ApplicationController
   skip_before_action :authenticate_admin!, only: %i[index]
 
   def index
-    @categories = Categorie.all
-    render json: @categories
+    render json: Categorie.all
   end
 
   def show
@@ -18,7 +17,7 @@ class CategoriesController < ApplicationController
     @category = Categorie.new(category_params)
 
     if @category.save
-      render json: @category, status: :created, location: @category
+      render json: @category, status: :created
     else
       render json: @category.errors, status: :unprocessable_entity
     end
@@ -38,12 +37,10 @@ class CategoriesController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_category
     @category = Categorie.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def category_params
     params.require(:category).permit(:name)
   end
