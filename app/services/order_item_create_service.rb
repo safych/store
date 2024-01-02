@@ -1,5 +1,5 @@
 class OrderItemCreateService
-  def initialize(email, password)
+  def initialize(user, products)
     @user = user
     @products = products
   end

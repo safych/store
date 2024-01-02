@@ -1,7 +1,7 @@
 class CartItemCreateService
-  def initialize(email, password, user)
-    @product = user
-    @count = products
+  def initialize(product, count, user)
+    @product = product
+    @count = count
     @user = user
   end
 

@@ -6,6 +6,8 @@ class User < ApplicationRecord
   has_many :cart_items
   has_many :tokens
   has_many :orders
+  has_many :favorite_products
+
   include BCrypt
 
   def password
